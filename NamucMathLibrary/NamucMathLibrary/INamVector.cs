@@ -15,14 +15,14 @@ namespace NamucMathLibrary
         /// <summary>
         /// Get number of components
         /// </summary>
-        UInt32 Components { get; }
+        Int32 Components { get; }
 
         /// <summary>
         /// Get or set the elements of the vector
         /// </summary>
         /// <param name="componentIndex"></param>
         /// <returns></returns>
-        float this[int componentIndex]
+        double this[int componentIndex]
         {
             get;
             set;
@@ -31,7 +31,7 @@ namespace NamucMathLibrary
         /// <summary>
         /// Gets the norm of the vector
         /// </summary>
-        float Norm
+        double Norm
         {
             get;
         }
@@ -39,7 +39,7 @@ namespace NamucMathLibrary
         /// <summary>
         /// Gets the normalize form of the vector.
         /// </summary>
-        INamVector Normalized
+        INamVector Normalize
         {
             get;
         }
