@@ -18,6 +18,8 @@ namespace Namuc
             z = iz;
         }
 
+        internal const double TOLLERANCE = .00001;
+
 
 
         public double x;
@@ -94,6 +96,81 @@ namespace Namuc
             return new Vector3D(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
         }
 
+        public override string ToString()
+        {
+            return string.Format("x: {0} - y: {1} - z: {2}", x, y, z);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return this.Equals(obj as Vector3D);
+        }
+
+        public bool Equals(Vector3D p)
+        {
+            // If parameter is null, return false.
+            if (Object.ReferenceEquals(p, null))
+            {
+                return false;
+            }
+
+            // Optimization for a common success case.
+            if (Object.ReferenceEquals(this, p))
+            {
+                return true;
+            }
+
+            // Define the tolerance for variation in their values
+            double difference_x = Math.Abs(p.x * TOLLERANCE);
+            double difference_y = Math.Abs(p.y * TOLLERANCE);
+            double difference_z = Math.Abs(p.z * TOLLERANCE);
+
+            if (Math.Abs(p.x - x) <= difference_x)
+            {
+                if (Math.Abs(p.y - y) <= difference_y)
+                {
+                    if (Math.Abs(p.z - z) <= difference_z)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            else
+            {
+                return false;
+            }
+            
+        }
+
+        public override int GetHashCode()
+        {
+            return Convert.ToInt32( (x * 0x100000) + (y * 0x1000) + (z * 0x100000));
+        }
+
+        public static bool operator ==(Vector3D lhs, Vector3D rhs)
+        {
+            // Check for null.
+            if (Object.ReferenceEquals(lhs, null))
+            {
+                if (Object.ReferenceEquals(rhs, null))
+                {
+                    // null == null = true.
+                    return true;
+                }
+
+                // Only the left side is null.
+                return false;
+            }
+            // Equals handles the case of null on right side.
+            return lhs.Equals(rhs);
+        }
+
+        public static bool operator !=(Vector3D lhs, Vector3D rhs)
+        {
+            return !(lhs == rhs);
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -132,9 +209,9 @@ namespace Namuc
         /// <param name="v1"></param>
         /// <param name="v2"></param>
         /// <returns></returns>
-        public static Vector3D VectorProduct(Vector3D v1, Vector3D v2)
+        public static Vector3D VectorialProduct(Vector3D v1, Vector3D v2)
         {
-            return new Vector3D((v1.y * v2.z) - (v1.z * v2.y), (v1.z * v2.x) - (v1.x * v2.z), (v1.x * v2.y) - (v1.y - v2.x));
+            return new Vector3D((v1.y * v2.z) - (v1.z * v2.y), (v1.z * v2.x) - (v1.x * v2.z), (v1.x * v2.y) - (v1.y * v2.x));
         }
 
     }
